@@ -1,6 +1,19 @@
 cmake_minimum_required(VERSION 4.1)
-project(aoc++)
 
-set(CMAKE_CXX_STANDARD 23)
+project(aoc++ LANGUAGES CXX)
 
-add_executable(aoc__ main.cpp)
+include(cmake/CPM.cmake)
+
+CPMAddPackage("gh:fmtlib/fmt#12.1.0")
+CPMAddPackage("gh:catchorg/Catch2@3.11.0")
+CPMAddPackage("gh:libcpr/cpr#1.14.1")
+
+list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
+include(CTest)
+include(Catch)
+
+add_subdirectory(libs/core)
+add_subdirectory(libs/status)
+add_subdirectory(libs/aoc)
+
+add_subdirectory(app)

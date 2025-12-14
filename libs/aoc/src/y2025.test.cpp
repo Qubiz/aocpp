@@ -1,0 +1,42 @@
+#include <catch2/catch_test_macros.hpp>
+
+import qubiz.aoc;
+import qubiz.core;
+import qubiz.status;
+
+using namespace std::chrono_literals;
+
+namespace qubiz {
+    struct TestInputProducer {
+        static auto fetch(const std::chrono::year y, const std::chrono::day d) -> Result<std::string> {
+            if (y != 2025y) {
+                return err(error_code::invalid_argument);
+            }
+
+
+
+            if (d == 1d) {
+                return ok(
+                    R"(L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82)"
+                );
+            }
+
+            return err(error_code::not_found);
+        }
+    };
+}
+
+TEST_CASE("Y2025 - D1") {
+    const auto result = qubiz::aoc::y2025::run(1d, qubiz::TestInputProducer::fetch);
+    REQUIRE(result);
+    REQUIRE(*result == 3);
+}
