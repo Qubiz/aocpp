@@ -1,0 +1,130 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CPM_SOURCE_CACHE": "${sourceDir}/build/cpm-cache"
+      }
+    },
+    {
+      "name": "debug-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "gcc-debug",
+      "displayName": "GCC Debug Build",
+      "inherits": [
+        "base",
+        "debug-base"
+      ],
+      "cacheVariables": {
+      }
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "GCC Release Build",
+      "inherits": [
+        "base",
+        "release-base"
+      ],
+      "cacheVariables": {
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-base",
+      "hidden": true,
+      "jobs": 0
+    },
+    {
+      "name": "gcc-debug",
+      "configurePreset": "gcc-debug",
+      "inherits": [
+        "build-base"
+      ]
+    },
+    {
+      "name": "gcc-release",
+      "configurePreset": "gcc-release",
+      "inherits": [
+        "build-base"
+      ]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "test-base",
+      "hidden": true,
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "gcc-debug",
+      "inherits": "test-base",
+      "configurePreset": "gcc-debug"
+    },
+    {
+      "name": "gcc-release",
+      "inherits": "test-base",
+      "configurePreset": "gcc-release"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "gcc-debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "gcc-debug"
+        },
+        {
+          "type": "build",
+          "name": "gcc-debug"
+        },
+        {
+          "type": "test",
+          "name": "gcc-debug"
+        }
+      ]
+    },
+    {
+      "name": "gcc-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "gcc-release"
+        },
+        {
+          "type": "build",
+          "name": "gcc-release"
+        },
+        {
+          "type": "test",
+          "name": "gcc-release"
+        }
+      ]
+    }
+  ]
+}

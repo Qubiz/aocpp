@@ -1,0 +1,4 @@
+.idea
+build
+.clang-format
+.clang-tidy
