@@ -13,6 +13,7 @@ target_link_libraries(qubiz.aoc
         qubiz.core
         qubiz.status
         cpr::cpr
+        fmt::fmt
 )
 
 #########

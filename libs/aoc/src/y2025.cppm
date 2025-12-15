@@ -55,10 +55,16 @@ L82)";
                 position = position + rotate_amount;
             }
 
+            /// If we rotated to the left and passed 0 (so a negative number),
+            /// we need to rotate back until the value is back into the valid
+            /// range.
             while (position < 0) {
                 position += NUM_POSITIONS;
             }
 
+            /// If we rotated to the right and passed max (so a negative number),
+            /// we need to rotate back until the value is back into the valid
+            /// range.
             while (position >= NUM_POSITIONS) {
                 position -= NUM_POSITIONS;
             }
