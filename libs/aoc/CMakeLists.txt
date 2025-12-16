@@ -5,6 +5,7 @@ target_sources(qubiz.aoc
         FILE_SET CXX_MODULES
         FILES
         src/aoc.cppm
+        src/types.cppm
         src/puzzle_input_producer.cppm
         src/y2025.cppm
 )

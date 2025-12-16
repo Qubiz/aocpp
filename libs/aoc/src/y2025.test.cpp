@@ -14,7 +14,6 @@ namespace qubiz {
             }
 
 
-
             if (d == 1d) {
                 return ok(
                     R"(L68
@@ -36,7 +35,10 @@ L82)"
 }
 
 TEST_CASE("Y2025 - D1") {
-    const auto result = qubiz::aoc::y2025::run(1d, qubiz::TestInputProducer::fetch);
-    REQUIRE(result);
-    REQUIRE(*result == 3);
+    const auto result = qubiz::aoc::y2025::solve(1d, qubiz::TestInputProducer::fetch);
+    REQUIRE(result.has_value());
+    REQUIRE(result->part1.has_value());
+    REQUIRE(*result->part1 == 3);
+    REQUIRE(result->part2.has_value());
+    REQUIRE(*result->part2 == 6);
 }
