@@ -18,13 +18,6 @@ import :types;
 
 export namespace qubiz::aoc
 {
-    struct PuzzleInputConfig
-    {
-        std::chrono::year year;
-        std::chrono::day day;
-        const char* session_token;
-    };
-
     using PuzzleInputProducer = std::function<Result<std::string>(std::chrono::year, std::chrono::day)>;
 
     class DefaultPuzzleInputProducer
@@ -54,8 +47,4 @@ export namespace qubiz::aoc
             return ok(r.text);
         }
     };
-} // namespace qubiz::aoc
-
-namespace qubiz::aoc
-{
 } // namespace qubiz::aoc
