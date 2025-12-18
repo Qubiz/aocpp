@@ -89,13 +89,4 @@ export namespace qubiz {
     [[nodiscard]] constexpr auto err(E &&e) noexcept {
         return err_value<std::decay_t<E> >{std::forward<E>(e)};
     }
-
-    template<typename T, typename E>
-    constexpr auto get_expected_value(std::expected<T, E> &&e) noexcept -> T {
-        if constexpr (std::is_void_v<T>) {
-            return;
-        } else {
-            return std::move(e).value();
-        }
-    }
 }

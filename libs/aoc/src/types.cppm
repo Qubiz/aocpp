@@ -1,6 +1,8 @@
 module;
 
 #include <chrono>
+#include <string_view>
+#include <ranges>
 
 export module qubiz.aoc:types;
 
@@ -11,8 +13,8 @@ export namespace qubiz::aoc
 {
     struct PuzzleResult
     {
-        Result<i64> part1;
-        Result<i64> part2;
+        Result<i64> part1{};
+        Result<i64> part2{};
     };
 
     struct PuzzleConfig

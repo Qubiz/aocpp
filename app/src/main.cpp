@@ -1,10 +1,11 @@
 #include <print>
 #include <chrono>
-
-#include <qubiz/status/try.hpp>
+#include <ranges>
 
 import qubiz.status;
 import qubiz.aoc;
+
+#include <qubiz/status/try.hpp>
 
 using namespace qubiz;
 using namespace std::chrono_literals;

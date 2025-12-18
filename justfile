@@ -1,3 +1,5 @@
+set dotenv-load := true
+
 default_preset := "gcc-debug"
 
 # Lists the available presets
@@ -24,3 +26,6 @@ workflow preset=default_preset *args:
 # Cleans the build directory for the given preset
 clean preset=default_preset:
     cmake --build --preset {{preset}} --target clean
+
+run year day preset=default_preset:
+    ./build/{{ preset }}/app/aoc++ {{ year }} {{ day }}

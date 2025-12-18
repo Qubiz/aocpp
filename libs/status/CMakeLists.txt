@@ -1,4 +1,4 @@
-add_library(qubiz.status)
+add_library(qubiz.status STATIC)
 target_sources(qubiz.status
         PUBLIC
         FILE_SET CXX_MODULES

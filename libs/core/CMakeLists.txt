@@ -1,4 +1,4 @@
-add_library(qubiz.core)
+add_library(qubiz.core STATIC)
 
 target_sources(qubiz.core
         PUBLIC

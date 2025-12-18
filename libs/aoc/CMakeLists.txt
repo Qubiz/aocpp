@@ -1,4 +1,4 @@
-add_library(qubiz.aoc)
+add_library(qubiz.aoc STATIC)
 
 target_sources(qubiz.aoc
         PUBLIC
@@ -7,14 +7,14 @@ target_sources(qubiz.aoc
         src/aoc.cppm
         src/types.cppm
         src/puzzle_input_producer.cppm
-        src/y2025.cppm
+        src/y2025/day1.cppm
 )
 
 target_link_libraries(qubiz.aoc
         qubiz.core
         qubiz.status
         cpr::cpr
-        fmt::fmt
+        fmt::fmt-header-only
 )
 
 #########
