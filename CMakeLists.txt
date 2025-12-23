@@ -6,7 +6,10 @@ project(aoc++ LANGUAGES CXX)
 
 include(cmake/CPM.cmake)
 
-CPMAddPackage("gh:fmtlib/fmt#12.1.0")
+CPMAddPackage(
+        URI "gh:fmtlib/fmt#12.1.0"
+        OPTIONS "FMT_MODULE ON"
+)
 CPMAddPackage("gh:catchorg/Catch2@3.11.0")
 CPMAddPackage("gh:libcpr/cpr#1.14.1")
 

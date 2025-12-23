@@ -2,13 +2,12 @@ module;
 
 #include <cstdio>
 #include <cpr/cpr.h>
-#include <fmt/format.h>
-
 #include <qubiz/status/try.hpp>
 
 export module qubiz.aoc:puzzle_input_producer;
 
 import std;
+import fmt;
 import qubiz.core;
 import qubiz.status;
 import :types;

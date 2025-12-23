@@ -5,70 +5,131 @@ export module qubiz.aoc:y2025.day1;
 import std;
 import qubiz.core;
 import qubiz.status;
+import fmt;
 
 export import :types;
 
-namespace qubiz::aoc::y2025::day1
+export namespace qubiz::aoc::y2025::day1
 {
     using namespace std::chrono_literals;
 
-    constexpr static i64 STARTING_POSITION = 50;
-    constexpr static i64 NUM_POSITIONS = 100;
+    constexpr i64 STARTING_POSITION = 50;
+    constexpr i64 NUM_POSITIONS = 100;
 
-    auto part1(std::string_view puzzle_input) -> Result<i64>
+    enum class Direction
     {
-        usize counted_zeroes{0};
-        i64 position = STARTING_POSITION;
-        for (const auto line : std::views::split(puzzle_input, '\n'))
+        LEFT, RIGHT
+    };
+
+    struct DialState
+    {
+        i64 position{STARTING_POSITION};
+        i64 exact_zeroes{0};
+        i64 passed_zeroes{0};
+    };
+
+    constexpr auto parse_int(const std::string_view input) -> i64
+    {
+        i64 val = 0;
+        for (const char i : input)
         {
-            const auto l = std::string_view{line};
-
-            i64 rotate_amount{0};
-            if (auto [ptr, ec] = std::from_chars(l.begin() + 1, l.end(), rotate_amount); ec != std::errc())
-            {
-                return err(error_code::invalid_argument);
-            }
-
-            if (l.starts_with('L'))
-            {
-                position = position - rotate_amount;
-            }
-            else if (l.starts_with('R'))
-            {
-                position = position + rotate_amount;
-            }
-
-            /// If we rotated to the left and passed 0 (so a negative number),
-            /// we need to rotate back until the value is back into the valid
-            /// range.
-            while (position < 0)
-            {
-                position += NUM_POSITIONS;
-            }
-
-            /// If we rotated to the right and passed max (so a negative number),
-            /// we need to rotate back until the value is back into the valid
-            /// range.
-            while (position >= NUM_POSITIONS)
-            {
-                position -= NUM_POSITIONS;
-            }
-
-            if (position == 0)
-            {
-                counted_zeroes++;
-            }
+            val = val * 10 + (i - '0');
         }
-        return ok(counted_zeroes);
+        return val;
     }
 
-    auto part2(std::string_view puzzle_input) -> Result<i64>
+    struct RotateAction
     {
-        return err(error_code::unimplemented);
+        constexpr explicit RotateAction(const std::string_view input)
+            : amount(parse_int(input.substr(1))),
+              direction((input[0] == 'L') ? Direction::LEFT : Direction::RIGHT)
+        {
+        }
+
+        i64 amount;
+        Direction direction;
+    };
+
+    constexpr auto rotate(DialState state, RotateAction action) -> DialState
+    {
+        while (action.amount != 0)
+        {
+            action.amount -= 1;
+            if (action.direction == Direction::LEFT)
+            {
+                // Rotating left
+                state.position -= 1;
+                if (state.position == -1)
+                {
+                    state.position = 99;
+                }
+            }
+            else
+            {
+                state.position += 1;
+                if (state.position == NUM_POSITIONS)
+                {
+                    state.position = 0;
+                }
+            }
+            state.exact_zeroes += (state.position == 0 && action.amount == 0);
+            state.passed_zeroes += (state.position == 0 && action.amount != 0);
+        }
+
+        return state;
     }
 
-    export auto solve(const std::string_view input) -> Result<PuzzleResult>
+    template <typename T>
+    concept RotateActionRange = std::ranges::input_range<T> &&
+        std::same_as<std::ranges::range_value_t<T>, RotateAction>;
+
+    constexpr auto apply_rotate_actions(DialState state, RotateActionRange auto&& remaining_actions) -> DialState
     {
-        return ok(PuzzleResult(part1(input), part2(input)));
+        for (const RotateAction action : remaining_actions)
+        {
+            state = rotate(state, action);
+        }
+        return state;
+    }
+
+    constexpr std::array EXAMPLE_INPUT = {
+        RotateAction("L68"),
+        RotateAction("L30"),
+        RotateAction("R48"),
+        RotateAction("L5"),
+        RotateAction("R60"),
+        RotateAction("L55"),
+        RotateAction("L1"),
+        RotateAction("L99"),
+        RotateAction("R14"),
+        RotateAction("L82"),
+    };
+
+    constexpr auto part1(RotateActionRange auto&& actions) -> Result<i64>
+    {
+        const DialState final_state = apply_rotate_actions(DialState{}, actions);
+        return ok(final_state.exact_zeroes);
+    }
+
+    static_assert(part1(EXAMPLE_INPUT).value() == 3);
+
+    constexpr auto part2(RotateActionRange auto&& actions) -> Result<i64>
+    {
+        const DialState final_state = apply_rotate_actions(DialState{}, actions);
+        return ok(final_state.exact_zeroes + final_state.passed_zeroes);
+    }
+
+    static_assert(part2(EXAMPLE_INPUT).value() == 6);
+
+    auto solve(const std::string_view input) -> Result<PuzzleResult>
+    {
+        auto actions = input
+            | std::views::split('\n')
+            | std::views::filter([](const auto line) -> bool { return !line.empty(); })
+            | std::views::transform([](const auto line)
+            {
+                return RotateAction(std::string_view(line));
+            });
+        return ok(PuzzleResult(part1(actions), part2(actions)));
     }
 }

@@ -1,7 +1,7 @@
 #include <cstdio>
-#include <fmt/format.h>
 
 import std;
+import fmt;
 import qubiz.status;
 import qubiz.aoc;
 

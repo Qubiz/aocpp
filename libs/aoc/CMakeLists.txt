@@ -11,26 +11,9 @@ target_sources(qubiz.aoc
 )
 
 target_link_libraries(qubiz.aoc
+        PUBLIC
         qubiz.core
         qubiz.status
         cpr::cpr
-        fmt::fmt-header-only
+        fmt::fmt
 )
-
-#########
-# Tests #
-#########
-add_executable(qubiz.aoc.test)
-
-target_sources(qubiz.aoc.test
-        PRIVATE
-        src/y2025.test.cpp
-)
-
-target_link_libraries(qubiz.aoc.test
-        PRIVATE
-        Catch2::Catch2WithMain
-        qubiz.aoc
-)
-
-catch_discover_tests(qubiz.aoc.test)
