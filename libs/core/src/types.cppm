@@ -1,9 +1,8 @@
 module;
 
-#include <algorithm>
-#include <cstdint>
-
 export module qubiz.core:types;
+
+import std;
 
 export namespace qubiz {
     using u8 = std::uint8_t;

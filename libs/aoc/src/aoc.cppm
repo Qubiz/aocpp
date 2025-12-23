@@ -1,16 +1,14 @@
 module;
 
-#include <chrono>
-#include <ranges>
-
 export module qubiz.aoc;
 
+import std;
 import qubiz.core;
 import qubiz.status;
 
 export import :types;
 export import :puzzle_input_producer;
-import :y2025.day1;
+export import :y2025.day1;
 
 export namespace qubiz::aoc
 {

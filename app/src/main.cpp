@@ -1,7 +1,7 @@
-#include <print>
-#include <chrono>
-#include <ranges>
+#include <cstdio>
+#include <fmt/format.h>
 
+import std;
 import qubiz.status;
 import qubiz.aoc;
 
@@ -16,7 +16,7 @@ namespace qubiz
     {
         if (const auto result = std::getenv(name); !result)
         {
-            std::println(stderr, "Env variable '{}' does not exist", name);
+            fmt::println(stderr, "Env variable '{}' does not exist", name);
             return err(error_code::not_found);
         }
         else
@@ -30,20 +30,20 @@ namespace qubiz
         const auto& [part1, part2] = result;
         if (part1)
         {
-            std::println("- Part 1: {}", part1.value());
+            fmt::println("- Part 1: {}", part1.value());
         }
         else
         {
-            std::println(stderr, "- Part 1: {}", as_string(part1.error()));
+            fmt::println(stderr, "- Part 1: {}", as_string(part1.error()));
         }
 
         if (part2)
         {
-            std::println("- Part 2: {}", part2.value());
+            fmt::println("- Part 2: {}", part2.value());
         }
         else
         {
-            std::println(stderr, "- Part 2: {}", as_string(part2.error()));
+            fmt::println(stderr, "- Part 2: {}", as_string(part2.error()));
         }
     }
 
@@ -52,7 +52,7 @@ namespace qubiz
         constexpr static auto year = 2025y;
         constexpr static auto day = 1d;
 
-        std::println("Solving puzzle for {}, day {}:", year, day);
+        fmt::println("Solving puzzle for {}, day {}:", static_cast<int>(year), static_cast<unsigned>(day));
 
         // Use the default puzzle input producer to fetch the input directly from AOC.
         aoc::DefaultPuzzleInputProducer producer(QUBIZ_TRY(env("AOC_SESSION_TOKEN")));
@@ -73,7 +73,7 @@ int main()
 {
     if (auto res = run(); !res)
     {
-        std::println(stderr, "Failure: {}", as_string(res.error()));
+        fmt::println(stderr, "Failure: {}", as_string(res.error()));
         return 1;
     }
     return 0;

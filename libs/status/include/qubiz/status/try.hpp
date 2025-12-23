@@ -1,8 +1,6 @@
 #pragma once
 
-#include <expected>
-#include <type_traits>
-#include <utility>
+import std;
 
 namespace qubiz::detail
 {

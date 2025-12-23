@@ -1,5 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
+import std;
 import qubiz.aoc;
 import qubiz.core;
 import qubiz.status;
@@ -35,7 +36,16 @@ L82)"
 }
 
 TEST_CASE("Y2025 - D1") {
-    const auto result = qubiz::aoc::y2025::solve(1d, qubiz::TestInputProducer::fetch);
+    auto input_res = qubiz::TestInputProducer::fetch(2025y, 1d);
+    REQUIRE(input_res.has_value());
+
+    const qubiz::aoc::PuzzleConfig config{
+        .year = 2025y,
+        .day = 1d,
+        .input = *input_res
+    };
+
+    const auto result = qubiz::aoc::solve(config);
     REQUIRE(result.has_value());
     REQUIRE(result->part1.has_value());
     REQUIRE(*result->part1 == 3);

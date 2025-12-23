@@ -7,8 +7,10 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
+        "CMAKE_CXX_MODULE_STD": "ON",
         "CMAKE_CXX_STANDARD": "23",
         "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_EXPERIMENTAL_CXX_IMPORT_STD": "d0edc3af-4c50-42ea-a356-e2862fe7a444",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "CPM_SOURCE_CACHE": "${sourceDir}/build/cpm-cache"
       }

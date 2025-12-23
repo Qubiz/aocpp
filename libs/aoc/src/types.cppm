@@ -1,11 +1,8 @@
 module;
 
-#include <chrono>
-#include <string_view>
-#include <ranges>
-
 export module qubiz.aoc:types;
 
+import std;
 export import qubiz.core;
 export import qubiz.status;
 

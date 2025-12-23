@@ -1,8 +1,8 @@
 module;
 
-#include <expected>
-
 export module qubiz.core:expected;
+
+import std;
 
 namespace qubiz {
     struct ok_default {

@@ -1,10 +1,6 @@
 module;
 
-#include <ranges>
-#include <functional>
-#include <print>
-#include <string>
-
+#include <cstdio>
 #include <cpr/cpr.h>
 #include <fmt/format.h>
 
@@ -12,6 +8,7 @@ module;
 
 export module qubiz.aoc:puzzle_input_producer;
 
+import std;
 import qubiz.core;
 import qubiz.status;
 import :types;
@@ -41,7 +38,7 @@ export namespace qubiz::aoc
 
             if (r.status_code != 200)
             {
-                std::println(stderr, "Failed to fetch input: {}", r.status_code);
+                fmt::println(stderr, "Failed to fetch input: {}", r.status_code);
                 return err(error_code::internal);
             }
             return ok(r.text);

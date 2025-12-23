@@ -1,12 +1,8 @@
 module;
 
-#include <chrono>
-#include <string_view>
-#include <ranges>
-#include <charconv>
-
 export module qubiz.aoc:y2025.day1;
 
+import std;
 import qubiz.core;
 import qubiz.status;
 
