@@ -8,6 +8,7 @@ target_sources(qubiz.aoc
         src/types.cppm
         src/puzzle_input_producer.cppm
         src/y2025/day1.cppm
+        src/y2025/day2.cppm
 )
 
 target_link_libraries(qubiz.aoc

@@ -9,6 +9,7 @@ import qubiz.status;
 export import :types;
 export import :puzzle_input_producer;
 export import :y2025.day1;
+export import :y2025.day2;
 
 export namespace qubiz::aoc
 {
@@ -20,6 +21,11 @@ export namespace qubiz::aoc
             if (config.day == 1d)
             {
                 return y2025::day1::solve(config.input);
+            }
+
+            if (config.day == 2d)
+            {
+                return y2025::day2::solve(config.input);
             }
         }
 
