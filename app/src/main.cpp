@@ -50,17 +50,18 @@ namespace qubiz
     auto run() -> Status
     {
         constexpr static auto year = 2025y;
-        constexpr static auto day = 1d;
+        constexpr static auto day = 2d;
 
         fmt::println("Solving puzzle for {}, day {}:", static_cast<int>(year), static_cast<unsigned>(day));
 
         // Use the default puzzle input producer to fetch the input directly from AOC.
         aoc::DefaultPuzzleInputProducer producer(QUBIZ_TRY(env("AOC_SESSION_TOKEN")));
 
+        const std::string input = QUBIZ_TRY(producer.fetch(year, day));
         const aoc::PuzzleConfig config{
             .year = year,
             .day = day,
-            .input = QUBIZ_TRY(producer.fetch(year, day))
+            .input = input
         };
 
         result_display(QUBIZ_TRY(aoc::solve(config)));

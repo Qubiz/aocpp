@@ -1,15 +1,17 @@
-module;
-
 export module qubiz.aoc:y2025.day1;
 
-import std;
-import qubiz.core;
-import qubiz.status;
-import fmt;
-
+export import std;
+export import qubiz.core;
+export import qubiz.status;
 export import :types;
+import :utils;
 
 export namespace qubiz::aoc::y2025::day1
+{
+    auto solve(std::string_view input) -> Result<PuzzleResult>;
+}
+
+namespace qubiz::aoc::y2025::day1
 {
     using namespace std::chrono_literals;
 
@@ -24,30 +26,20 @@ export namespace qubiz::aoc::y2025::day1
     struct DialState
     {
         i64 position{STARTING_POSITION};
-        i64 exact_zeroes{0};
-        i64 passed_zeroes{0};
+        u64 exact_zeroes{0};
+        u64 passed_zeroes{0};
     };
-
-    constexpr auto parse_int(const std::string_view input) -> i64
-    {
-        i64 val = 0;
-        for (const char i : input)
-        {
-            val = val * 10 + (i - '0');
-        }
-        return val;
-    }
 
     struct RotateAction
     {
         constexpr explicit RotateAction(const std::string_view input)
-            : amount(parse_int(input.substr(1))),
+            : amount(utils::parse_int(input.substr(1))),
               direction((input[0] == 'L') ? Direction::LEFT : Direction::RIGHT)
         {
         }
 
-        i64 amount;
-        Direction direction;
+        i64 amount{};
+        Direction direction{};
     };
 
     constexpr auto rotate(DialState state, RotateAction action) -> DialState
@@ -105,7 +97,7 @@ export namespace qubiz::aoc::y2025::day1
         RotateAction("L82"),
     };
 
-    constexpr auto part1(RotateActionRange auto&& actions) -> Result<i64>
+    constexpr auto part1(RotateActionRange auto&& actions) -> Result<u64>
     {
         const DialState final_state = apply_rotate_actions(DialState{}, actions);
         return ok(final_state.exact_zeroes);
@@ -113,7 +105,7 @@ export namespace qubiz::aoc::y2025::day1
 
     static_assert(part1(EXAMPLE_INPUT).value() == 3);
 
-    constexpr auto part2(RotateActionRange auto&& actions) -> Result<i64>
+    constexpr auto part2(RotateActionRange auto&& actions) -> Result<u64>
     {
         const DialState final_state = apply_rotate_actions(DialState{}, actions);
         return ok(final_state.exact_zeroes + final_state.passed_zeroes);

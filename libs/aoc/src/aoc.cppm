@@ -2,12 +2,12 @@ module;
 
 export module qubiz.aoc;
 
-import std;
-import qubiz.core;
-import qubiz.status;
-
-export import :types;
+export import std;
+export import qubiz.core;
+export import qubiz.status;
 export import :puzzle_input_producer;
+export import :types;
+export import :utils;
 export import :y2025.day1;
 export import :y2025.day2;
 
@@ -32,3 +32,4 @@ export namespace qubiz::aoc
         return err(error_code::not_found);
     }
 }
+// Forced rebuild
